@@ -1,3 +1,0 @@
-#DISCUSSION
-##DATA SCIENCE TOOL BOX
-###This is the repository for the case study Data Science Toolbox Discussion Exercise
