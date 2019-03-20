@@ -6,7 +6,7 @@ Date: "March 20, 2019"
 Output: pdf_document
 ---
 
-# FInding the Top Five Barangays in the Philippines with the Highest Population Density using R and dplyr package
+# Finding the Top Five Barangays in the Philippines with the Highest Population Density using R and dplyr package
 To calculate the population density of every barangay in the Philippines, we wrote the following code with the following explanation:
 
 ## Loading the dplyr library
@@ -107,7 +107,7 @@ write.csv(Top5Brgy,'Top5BarangayDensity.csv')
 ```
 ### End
 
-# FInding the Top Five Cities in the Philippines with the Highest Population Density using R and dplyr package
+# Finding the Top Five Cities in the Philippines with the Highest Population Density using R and dplyr package
 To calculate the population density of every city in the Philippines, we wrote the following code with the following explanation:
 
 ## **Step 1: Run dplyr and and extract files**
