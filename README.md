@@ -6,10 +6,10 @@ Date: "March 20, 2019"
 Output: pdf_document
 ---
 
-# Finding the Top Five Barangays in the Philippines with the Highest Population Density using R and dplyr package
-*To calculate the population density of every barangay in the Philippines, we wrote the following code with the following explanation:*
+# FInding the Top Five Barangays in the Philippines with the Highest Population Density using R and dplyr package
+To calculate the population density of every barangay in the Philippines, we wrote the following code with the following explanation:
 
-## Loading the dplyr package
+## Loading the dplyr library
 First, we load the dplyr package which we would use in the entire process.
 
 ```{r dplyr}
@@ -105,11 +105,12 @@ Finally, we used the write.csv function to save the final data frame (Top5Brgy) 
 ```{r Top5Brgy CSV}
 write.csv(Top5Brgy,'Top5BarangayDensity.csv')
 ```
+### End
 
+# FInding the Top Five Cities in the Philippines with the Highest Population Density using R and dplyr package
+To calculate the population density of every city in the Philippines, we wrote the following code with the following explanation:
 
-# Finding the Top Five Cities in the Philippines with the Highest Population Density using R and dplyr package
-
-## Extracting Data
+## **Step 1: Run dplyr and and extract files**
 In order to acquire the answer to the problem, the package **dplyr** is needed. After running the package, we read the csv files in order to access the data frames provided.
 
 ```{r Extraction}
@@ -118,7 +119,7 @@ population=read.csv("population.csv")
 regionarea=read.csv("regionarea.csv")
 ```
 
-## Area per City
+## **Step 2: Calculate Area per City**
 Area per City was estimated by dividing the area per region by the number of cities for that region. First, the number of cities per region was calculated. Then, tables containing city count and area per region were **merged**. Lastly, area per region was divided by city count.
 
 ```{r AreaperCity}
@@ -129,7 +130,7 @@ innerjoin=merge(citycount,regionarea,by.x=("Region"),by.y=("Region"))
 Areapercity=mutate(innerjoin,AreaPerCity=Area/count)
 ```
 
-## Population per CityProvince
+## **Step 3: Calculate Population per City**
 Population per CityProvince was computed by **grouping** the population table by Region and CityProvince. Then, the sum of population was taken.
 
 ```{r PopulationbyCityProvince}
@@ -138,14 +139,14 @@ by_CityProvince=group_by(distinct2,Region,CityProvince)
 PopulationbyCityProvince=summarise(by_CityProvince,PopulationbyCity=sum(Population))
 ```
 
-## Join Tables
+## **Step 4: Merge Area per City and Population per City**
 To make a more informative dataframe, the table from Step 2 has been combined with the table from Step 3, **Areapercity + PopulationbyCityProvince**, using the **inner_join** function where their common column is the **Region**.
 
 ```{r Joins}
 innerjoin2 = inner_join(Areapercity,PopulationbyCityProvince, by = "Region", all.x=TRUE, all.y=TRUE)
 ```
 
-## Final output Table
+## **Step 5: Compute Population density**
 A new column for population density was created which **divides** the Population by City by the Area Per City.
 
 ```{r FinalTable}
@@ -154,7 +155,7 @@ temptable = temptable[c(1,3,2,4)]
 finaltable = mutate(temptable,PopDenCity = PopulationbyCity/AreaPerCity)
 ```
 
-## Sorting for Top 5 cities
+## **Step 6: Select top 5**
 The Population density was arranged from **highest to lowest** population density. Then the first 5 rows were selected.
 
 ```{r Top5}
@@ -162,9 +163,11 @@ FinalTable = arrange(finaltable, desc(PopDenCity))
 topfive=head(FinalTable, 5)
 ```
 
-## Save to CSV
+## **Step 7: Save to CSV**
 After acquiring the cities with the highest population density in the country, we’ve created a separate data frame for only the **top 5 cities** and extracting it into a ‘csv’ file using the **write.csv** function.
 
 ```{r CSVFile}
 write.csv(topfive, file="Top_5_Cities")
 ```
+
+### End
