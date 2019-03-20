@@ -1,14 +1,10 @@
 ---
-title: "Data Science Toolbox Discussion Exercise"
-author: Shannah Therese Aberin, Andrea Isabel Alcala, John Christopher Galleon, Janrey
+Title: "Data Science Toolbox Discussion Exercise"
+Authors: Shannah Therese Aberin, Andrea Isabel Alcala, John Christopher Galleon, Janrey
   Nevado, and Ma. Laia Valencia
-date: "March 20, 2019"
-output: pdf_document
+Date: "March 20, 2019"
+Output: pdf_document
 ---
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
 
 # Population Density per Barangay
 To calculate the population density of every barangay in the Philippines, we wrote the following code with the following explanation:
@@ -114,7 +110,7 @@ write.csv(Top5Brgy,'Top5BarangayDensity.csv')
 # Acquiring the Population Density of each City in the Philippines
 
 ## Extracting Data
-### In order to acquire the answer to the problem, the package **dplyr** is needed. After running the package, we read the csv files in order to access the data frames provided.
+In order to acquire the answer to the problem, the package **dplyr** is needed. After running the package, we read the csv files in order to access the data frames provided.
 
 ```{r Extraction}
 library(dplyr)
@@ -123,7 +119,7 @@ regionarea=read.csv("regionarea.csv")
 ```
 
 ## Area per City
-### Area per City was estimated by dividing the area per region by the number of cities for that region. First, the number of cities per region was calculated. Then, tables containing city count and area per region were **merged**. Lastly, area per region was divided by city count.
+Area per City was estimated by dividing the area per region by the number of cities for that region. First, the number of cities per region was calculated. Then, tables containing city count and area per region were **merged**. Lastly, area per region was divided by city count.
 
 ```{r AreaperCity}
 distinct=distinct(select(population,Region,CityProvince))
@@ -134,7 +130,7 @@ Areapercity=mutate(innerjoin,AreaPerCity=Area/count)
 ```
 
 ## Population per CityProvince
-### Population per CityProvince was computed by **grouping** the population table by Region and CityProvince. Then, the sum of population was taken.
+Population per CityProvince was computed by **grouping** the population table by Region and CityProvince. Then, the sum of population was taken.
 
 ```{r PopulationbyCityProvince}
 distinct2=distinct(select(population,Region,CityProvince,Population))
@@ -143,14 +139,14 @@ PopulationbyCityProvince=summarise(by_CityProvince,PopulationbyCity=sum(Populati
 ```
 
 ## Join Tables
-### To make a more informative dataframe, the table from Step 2 has been combined with the table from Step 3, **Areapercity + PopulationbyCityProvince**, using the **inner_join** function where their common column is the **Region**.
+To make a more informative dataframe, the table from Step 2 has been combined with the table from Step 3, **Areapercity + PopulationbyCityProvince**, using the **inner_join** function where their common column is the **Region**.
 
 ```{r Joins}
 innerjoin2 = inner_join(Areapercity,PopulationbyCityProvince, by = "Region", all.x=TRUE, all.y=TRUE)
 ```
 
 ## Final output Table
-### A new column for population density was created which **divides** the Population by City by the Area Per City.
+A new column for population density was created which **divides** the Population by City by the Area Per City.
 
 ```{r FinalTable}
 temptable = select(innerjoin2, Region, AreaPerCity, CityProvince, PopulationbyCity)
@@ -159,7 +155,7 @@ finaltable = mutate(temptable,PopDenCity = PopulationbyCity/AreaPerCity)
 ```
 
 ## Sorting for Top 5 cities
-### The Population density was arranged from **highest to lowest** population density. Then the first 5 rows were selected.
+The Population density was arranged from **highest to lowest** population density. Then the first 5 rows were selected.
 
 ```{r Top5}
 FinalTable = arrange(finaltable, desc(PopDenCity))
@@ -167,10 +163,9 @@ topfive=head(FinalTable, 5)
 ```
 
 ## Save to CSV
-### After acquiring the cities with the highest population density in the country, we’ve created a separate data frame for only the **top 5 cities** and extracting it into a ‘csv’ file using the **write.csv** function.
+After acquiring the cities with the highest population density in the country, we’ve created a separate data frame for only the **top 5 cities** and extracting it into a ‘csv’ file using the **write.csv** function.
 
 ```{r CSVFile}
 write.csv(topfive, file="Top_5_Cities")
 ```
-
 ### End
