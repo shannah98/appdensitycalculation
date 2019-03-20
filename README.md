@@ -21,10 +21,6 @@ Second, we load the needed CSV files: "population.csv" and "regionarea.csv"
 
 ```{r population}
 populationdata = read.csv("population.csv")
-
-```
-
-```{r regionarea}
 regionareadata = read.csv("regionarea.csv")
 ```
 
