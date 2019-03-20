@@ -101,7 +101,6 @@ Finally, we used the write.csv function to save the final data frame (Top5Brgy) 
 ```{r Top5Brgy CSV}
 write.csv(Top5Brgy,'Top5BarangayDensity.csv')
 ```
-### End
 
 # Finding the Top Five Cities in the Philippines with the Highest Population Density using R and dplyr package
 To calculate the population density of every city in the Philippines, we wrote the following code with the following explanation:
